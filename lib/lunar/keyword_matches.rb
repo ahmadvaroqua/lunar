@@ -14,14 +14,16 @@ module Lunar
       return if keys.flatten.empty?
 
       nest[{ att => value }.hash].tap do |dk|
-        dk.zunionstore keys.flatten
+        # dk.zunionstore keys.flatten
+        # Trying something out here, I only want results that meet all the criteria
+        dk.zinterstore keys.flatten
       end
     end
 
   protected
     def keys
       if att == :q
-        metaphones.map { |m| 
+        metaphones.map { |m|
           nest[Index::FIELDS][Index::TEXT].smembers.map { |att| nest[att][m] }
         }
       else
