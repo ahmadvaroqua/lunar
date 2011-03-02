@@ -14,9 +14,9 @@ module Lunar
       return if keys.flatten.empty?
 
       nest[{ att => value }.hash].tap do |dk|
-        # dk.zunionstore keys.flatten
+        dk.zunionstore keys.flatten
         # Trying something out here, I only want results that meet all the criteria
-        dk.zinterstore keys.flatten
+        # dk.zinterstore keys.flatten
       end
     end
 
